@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>ACA Soundscape Map</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/aca-sound-map/map_style.css">
+  <!-- Google fonts-->
+  <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Open+Sans" />
+
+  <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no"/>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.js"></script>
+  <link href="https://api.mapbox.com/mapbox-gl-js/v1.9.1/mapbox-gl.css" rel="stylesheet" />
+  <script src="https://npmcdn.com/csv2geojson@latest/csv2geojson.js"></script>
+  <script src="https://npmcdn.com/@turf/turf/turf.min.js"></script>
+  <script src="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.min.js"></script>
+  <link rel="stylesheet" href="https://api.mapbox.com/mapbox-gl-js/plugins/mapbox-gl-geocoder/v4.0.0/mapbox-gl-geocoder.css" type="text/css" />
+</head>
+    
+<body>
+  
+<div id="map"></div>
+  
+  <script>
+    var geocoder = new MapboxGeocoder({
+       accessToken: mapboxgl.accessToken,
+       mapboxgl: mapboxgl
+    });
+    
+    var transformRequest = (url, resourceType) => {
+      var isMapboxRequest =
+        url.slice(8, 22) === "api.mapbox.com" ||
+        url.slice(10, 26) === "tiles.mapbox.com";
+      return {
+        url: isMapboxRequest
+          ? url.replace("?", "?pluginName=sheetMapper&")
+          : url
+      };
+    };
+      
+    //Mapbox token 
+    mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYWxnYyIsImEiOiJja2NjbTAyczkwNXA3Mnlscm5nbjN5OHZiIn0.yNcJkPBSugRlIeGkXDRlZw'; //Mapbox token 
+      
+    var map = new mapboxgl.Map({
+      container: 'map', // container id
+      style: 'mapbox://styles/saralgc/cktjegk4m48q517s1tn4uxjsy',
+      center: [-80.824,28.910], // starting position
+      zoom: 11.5,// starting zoom
+      transformRequest: transformRequest
+    });
+
+    $(document).ready(function () {
+      $.ajax({
+        type: "GET",
+        //YOUR TURN: Replace with csv export link
+        //https://www.mapbox.com/impact-tools/sheet-mapper
+        url: 'https://docs.google.com/spreadsheets/d/1JRGhIp50D34MDaLmGGp1GLOnKqx2JS-UI1XAGlyDZu4/gviz/tq?tqx=out:csv&sheet=Video',
+        dataType: "text",
+        success: function (csvData) { makeGeoJSON(csvData); }
+      });
+
+      function makeGeoJSON(csvData) {
+        csv2geojson.csv2geojson(csvData, {
+          latfield: 'Latitude',
+          lonfield: 'Longitude',
+          delimiter: ','
+        }, function (err, data) {
+          
+          map.on('load', function () {
+            
+            map.addLayer({
+              'id': 'csvData',
+              'type': 'circle',
+              'source': {
+                'type': 'geojson',
+                'data': data
+              },
+              'paint': {
+                'circle-radius': 8,
+                'circle-color': "#FFD700",
+              }
+            });
+            // When a click event occurs on a feature in the csvData layer, open a popup at the
+            // location of the feature, with description HTML from its properties.
+            
+            map.on('click', 'csvData', function (e) {
+              var coordinates = e.features[0].geometry.coordinates.slice();
+
+              var description = `<iframe src="https://player.vimeo.com/video/`+e.features[0].properties.Embed +`?portrait=0" width="100%" height="100%" frameborder="0" allow="autoplay; fullscreen" allowfullscreen></iframe>` + '<h2>' + e.features[0].properties.Name + '</h2>';                
+                
+              while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+              coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+              }
+                
+              //add Popup to map
+              new mapboxgl.Popup()
+                .setLngLat(coordinates)
+                .setHTML(description)
+                .addTo(map);
+            });
+           //  Change the cursor to a pointer when the mouse is over the places layer.
+            map.on('mouseenter', 'csvData', function () {
+              map.getCanvas().style.cursor = 'pointer';
+            });
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'csvData', function () {
+              map.getCanvas().style.cursor  = '';
+            });
+            var bbox = turf.bbox(data);
+           // map.fitBounds(bbox, { padding: 50 });
+            
+          });
+
+        });
+      };
+      
+      
+    });
+    
+
+      // ZOOM
+     // map.addControl(new mapboxgl.NavigationControl(), 'top-left'); // disable map zoom when using scroll
+    //  map.scrollZoom.disable(); 
+    
+  </script>
+          
+</body>
+
+</html>
