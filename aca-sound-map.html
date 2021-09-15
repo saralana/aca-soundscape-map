@@ -25,7 +25,17 @@
 <body>
   
 <div id="map"></div>
+    
+    
+<div id="mySidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <div class="sidebar-content">
+        <p>Listeners is a sonic cartography of the Canaveral National Seashore through its inhabitants. Workers, neighbours or visitors are invited to share a listening experience of their favorite place in the park. They are portrayed in video while listening, inviting the audience to listen with them.</p>
+    </div>
+</div>
   
+<img src="aca-sound-map/logo-menu.png" class="openbtn" onclick="openNav()"> 
+
   <script>
     var geocoder = new MapboxGeocoder({
        accessToken: mapboxgl.accessToken,
@@ -128,7 +138,50 @@
     //  map.scrollZoom.disable(); 
     
   </script>
-          
+<script>
+    function openNav() {
+  document.getElementById("mySidebar").style.width = "100%";
+}
+
+function closeNav() {
+  document.getElementById("mySidebar").style.width = "0";
+}
+  
+function myFunction() {
+  var popup = document.getElementById("myPopup");
+  popup.classList.toggle("show");
+}
+</script>
+
+<script>
+$(document).ready(function(){
+  $('[data-toggle="tooltip"]').tooltip();
+});
+</script>
+
+<script>
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+</script>
+
+    
+<content>
+    <img src="aca-sound-map/logo.png" alt="aca"> 
+    <p>Listeners is a sonic cartography of the Canaveral National Seashore through its inhabitants. Workers, neighbours or visitors are invited to share a listening experience of their favorite place in the park. They are portrayed in video while listening, inviting the audience to listen with them.</p>
+</content>
+    
 </body>
 
 </html>
