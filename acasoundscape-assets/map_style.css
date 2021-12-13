@@ -308,3 +308,8 @@ audio{
 .controls button:hover, .controls button:focus {
    color: #FFD700;
 }
+
+.mapboxgl-ctrl-top-right {
+    top: 0;
+    left: 0 !important;
+}
