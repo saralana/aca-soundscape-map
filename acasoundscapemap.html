@@ -55,13 +55,19 @@
       
     //Mapbox token 
     mapboxgl.accessToken = 'pk.eyJ1Ijoic2FyYWxnYyIsImEiOiJja2NjbTAyczkwNXA3Mnlscm5nbjN5OHZiIn0.yNcJkPBSugRlIeGkXDRlZw'; //Mapbox token 
-      
+    const bounds = [
+        [-81.824, 28.50], // Southwest coordinates
+        [-80, 29.5] // Northeast coordinates
+        ];
     var map = new mapboxgl.Map({
       container: 'map', // container id
       style: 'mapbox://styles/saralgc/cktjegk4m48q517s1tn4uxjsy',
       center: [-80.824,28.910], // starting position
       zoom: 11.5,// starting zoom
-      transformRequest: transformRequest
+      maxZoom: 17,
+      //minZoom: 9,
+      transformRequest: transformRequest,
+      maxBounds: bounds 
     });
 
     $(document).ready(function () {
@@ -127,7 +133,7 @@
             });
               
             map.setLayoutProperty('csvData', 'icon-size', 
-            ['interpolate', ['linear'], ['zoom'],0,0.15,6,0.25,15,0.45, 24,1.5]);
+            ['interpolate', ['linear'], ['zoom'],0,0.25,6,0.35,15,0.45, 24,1.5]);
            //  Change the cursor to a pointer when the mouse is over the places layer.
             map.on('mouseenter', 'csvData', function () {
               map.getCanvas().style.cursor = 'pointer';
