@@ -236,23 +236,23 @@ content{
       margin-top: 3px;
     }
     .mapboxgl-popup-anchor-top>.mapboxgl-popup-tip {
-      border-bottom-color: #FFD700;
+      border-bottom-color: #ff6a00;
     }
 .mapboxgl-popup-tip {
-    border-top-color: #FFD700 !important;
-    border-bottom-color: #FFD700 !important;
+    border-top-color: #ff6a00 !important;
+    border-bottom-color: #ff6a00 !important;
 }
 
 .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
     align-self: center;
-    border-top-color: #FFD700 !important;
+    border-top-color: #ff6a00 !important;
 }
 
 
 .mapboxgl-popup-anchor-left .mapboxgl-popup-tip {
-    border-right-color: #FFD700 !important;
-    border-top-color: #FFD70000 !important;
-    border-bottom-color: #FFD70000 !important;
+    border-right-color: #ff6a00 !important;
+    border-top-color: #ff6a00!important;
+    border-bottom-color: #ff6a00 !important;
 }
 
 .mapboxgl-popup-anchor-left {
@@ -266,9 +266,9 @@ content{
 }
 
 .mapboxgl-popup-anchor-right .mapboxgl-popup-tip {
-    border-left-color: #FFD700 !important;
-    border-top-color: #FFD70000 !important;
-    border-bottom-color: #FFD70000 !important;
+    border-left-color: #ff6a00 !important;
+    border-top-color: #ff6a0000 !important;
+    border-bottom-color: #ff6a0000 !important;
 }
 
 .mapboxgl-popup-anchor-bottom {
@@ -294,12 +294,12 @@ a.mapboxgl-ctrl-logo{
 }
 
 .mapboxgl-ctrl-group button {
-    background-color: #F6F6E3;
+    background-color: #ff6a00;
 }
 
 h2 {
     font-size: 20px;
-    color: #FFD700;
+    color: #ff6a00;
     font-family: 'Source Code Pro', 'Courier New', 'Lucida Sans Typewriter', monospace;
     line-height: 0px;
     text-align: center;
