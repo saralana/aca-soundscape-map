@@ -176,8 +176,8 @@ content{
     /* Popup styling */
 
     .mapboxgl-popup {
-      padding-bottom: 15px;
-      top: -10px !important;
+      padding-bottom: 30px;
+      /*top: -15px !important;*/
     }
 
     .mapboxgl-popup-close-button {
@@ -190,6 +190,7 @@ content{
       width: auto;
       background: transparent !important;
       top: -2px;
+    box-shadow: unset !important;
     }
 
     .mapboxgl-popup-content-wrapper {
@@ -278,8 +279,8 @@ a.mapboxgl-ctrl-logo{
 }
 
 .mapboxgl-ctrl-top-left {
-    top: 30px !important;
-    left: 40px !important;
+    top: 25px !important;
+    left: 25px !important;
 }
 
 .mapboxgl-ctrl-group button {
