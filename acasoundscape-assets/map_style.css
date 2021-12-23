@@ -16,6 +16,16 @@ p {
     bottom: 0px;
 }
 
+::-moz-selection { /* Code for Firefox */
+  color: darkblue;
+  background: white;
+}
+
+::selection {
+  color: darkblue;
+  background: white;
+}
+
 
 .marker {
     background-image: url('acasoundscape-assets/logo.jpg');
